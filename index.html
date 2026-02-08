@@ -47,15 +47,8 @@
         position: absolute;
         top: 200px;
         left: 200px;
-        transition: all 0.3s;
+        transition: all 0.2s;
         z-index: 2;
-    }
-
-    #arrowContainer {
-        position: absolute;
-        top: 0;
-        left: 0;
-        pointer-events: none; /* Pfeile nicht klickbar */
     }
 
     .arrow {
@@ -63,6 +56,7 @@
         font-size: 2em;
         color: red;
         animation: bounce 1s infinite;
+        pointer-events: none; /* nicht klickbar */
     }
 
     @keyframes bounce {
@@ -79,32 +73,31 @@
 <button id="yes">Ja</button>
 <button id="no">Nein</button>
 
-<div id="arrowContainer"></div>
-
 <script>
     const noBtn = document.getElementById("no");
     const yesBtn = document.getElementById("yes");
-    const arrowContainer = document.getElementById("arrowContainer");
 
-    let clickCount = 0;
+    let arrowCount = 0;
 
     noBtn.addEventListener("mouseenter", () => {
-        clickCount++;
-
-        // Button bewegt sich zufällig innerhalb des Bildschirms
+        // Nein-Button bewegt sich zufällig
         const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
         const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
         noBtn.style.left = x + "px";
         noBtn.style.top = y + "px";
 
-        // Nach jedem Klick erscheint ein Pfeil, der auf Ja zeigt
+        // Pfeil erstellen
         const yesRect = yesBtn.getBoundingClientRect();
         const arrow = document.createElement("div");
         arrow.className = "arrow";
+        arrow.textContent = "⬆️"; // Pfeil nach oben
+
+        // Position über Ja-Button
         arrow.style.left = (yesRect.left + yesRect.width/2 - 15) + "px";
-        arrow.style.top = (yesRect.top - 40 - (clickCount * 25)) + "px"; // jeder Pfeil ein Stück höher
-        arrow.textContent = "⬆️";
-        arrowContainer.appendChild(arrow);
+        arrow.style.top = (yesRect.top - 50 - arrowCount*25) + "px"; // stapelt nach oben
+        document.body.appendChild(arrow);
+
+        arrowCount++;
     });
 
     yesBtn.addEventListener("click", () => {
