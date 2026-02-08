@@ -10,9 +10,6 @@
         text-align: center;
         background: #ffe6f0;
         padding: 50px;
-        position: relative;
-        height: 100vh;
-        overflow: hidden;
     }
 
     h1 {
@@ -33,22 +30,16 @@
         border: none;
         border-radius: 10px;
         color: white;
-        position: relative;
     }
 
     #yes {
         background-color: #ff4d6d;
-        z-index: 1;
-        position: relative;
     }
 
     #no {
         background-color: #4d79ff;
         position: absolute;
-        top: 200px;
-        left: 200px;
-        transition: all 0.2s;
-        z-index: 2;
+        transition: all 0.3s;
     }
 </style>
 </head>
@@ -64,7 +55,7 @@
     const noBtn = document.getElementById("no");
     const yesBtn = document.getElementById("yes");
 
-    // Nein-Button läuft immer weg, egal wie oft
+    // Wenn auf Nein gezeigt wird, bewegt sich der Button zufällig
     noBtn.addEventListener("mouseenter", () => {
         const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
         const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
@@ -72,7 +63,7 @@
         noBtn.style.top = y + "px";
     });
 
-    // Klick auf Ja -> Rosen-Seite
+    // Wenn auf Ja geklickt wird, neue Seite mit Rosen
     yesBtn.addEventListener("click", () => {
         document.body.innerHTML = `
             <h1 style="color:#ff4d6d;">I Love U Catarina ❤️</h1>
