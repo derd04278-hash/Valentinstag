@@ -11,8 +11,8 @@
         background: #ffe6f0;
         padding: 50px;
         position: relative;
-        overflow: hidden;
         height: 100vh;
+        overflow: hidden;
     }
 
     h1 {
@@ -38,7 +38,6 @@
 
     #yes {
         background-color: #ff4d6d;
-        position: relative;
         z-index: 1;
     }
 
@@ -64,18 +63,18 @@
     const noBtn = document.getElementById("no");
     const yesBtn = document.getElementById("yes");
 
-    let clickCount = 0; // Zählt, wie oft Nein weggelaufen ist
+    let moveCount = 0; // Zählt, wie oft Nein bewegt wurde
 
     noBtn.addEventListener("mouseenter", () => {
-        clickCount++;
+        moveCount++;
 
-        // Nach 5-6 Klicks verschwindet der Button
-        if(clickCount > 5){
+        if (moveCount >= 5) {
+            // Button komplett ausblenden, aus dem Bildschirm entfernen
             noBtn.style.display = "none";
             return;
         }
 
-        // Neue zufällige Position innerhalb des Fensters
+        // Neue zufällige Position innerhalb des Bildschirms
         const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
         const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
         noBtn.style.left = x + "px";
@@ -83,6 +82,7 @@
     });
 
     yesBtn.addEventListener("click", () => {
+        // Neue Seite mit Rosen
         document.body.innerHTML = `
             <h1 style="color:#ff4d6d;">I Love U Catarina ❤️</h1>
             <div style="display:flex;justify-content:center;flex-wrap:wrap;margin-top:30px;">
