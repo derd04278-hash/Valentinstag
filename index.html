@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hallo Catarina</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background: #ffe6f0;
+        padding: 50px;
+    }
+
+    h1 {
+        color: #ff4d79;
+        font-size: 3em;
+    }
+
+    p {
+        font-size: 1.5em;
+        margin: 20px 0;
+    }
+
+    button {
+        font-size: 1.2em;
+        padding: 10px 20px;
+        margin: 20px;
+        cursor: pointer;
+        border: none;
+        border-radius: 10px;
+        color: white;
+    }
+
+    #yes {
+        background-color: #ff4d6d;
+    }
+
+    #no {
+        background-color: #4d79ff;
+        position: absolute;
+        transition: all 0.3s;
+    }
+</style>
+</head>
+<body>
+
+<h1>Hallo Catarina</h1>
+<p>Willst du den Valentinstag mit mir verbringen?</p>
+
+<button id="yes">Ja</button>
+<button id="no">Nein</button>
+
+<script>
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
+
+    // Wenn auf Nein gezeigt wird, bewegt sich der Button zufällig
+    noBtn.addEventListener("mouseenter", () => {
+        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+        const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+    });
+
+    // Wenn auf Ja geklickt wird, neue Seite mit Rosen
+    yesBtn.addEventListener("click", () => {
+        document.body.innerHTML = `
+            <h1 style="color:#ff4d6d;">I Love U Catarina ❤️</h1>
+            <div style="display:flex;justify-content:center;flex-wrap:wrap;margin-top:30px;">
+                <span style="font-size:3em;margin:10px;">🌹</span>
+                <span style="font-size:3em;margin:10px;">🌹</span>
+                <span style="font-size:3em;margin:10px;">🌹</span>
+                <span style="font-size:3em;margin:10px;">🌹</span>
+                <span style="font-size:3em;margin:10px;">🌹</span>
+            </div>
+        `;
+    });
+</script>
+
+</body>
+</html>
