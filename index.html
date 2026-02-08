@@ -39,6 +39,7 @@
     #yes {
         background-color: #ff4d6d;
         z-index: 1;
+        position: relative;
     }
 
     #no {
@@ -50,11 +51,17 @@
         z-index: 2;
     }
 
-    #arrow {
+    #arrowContainer {
         position: absolute;
-        font-size: 3em;
+        top: 0;
+        left: 0;
+        pointer-events: none; /* Pfeile nicht klickbar */
+    }
+
+    .arrow {
+        position: absolute;
+        font-size: 2em;
         color: red;
-        display: none; /* Pfeil ist zuerst unsichtbar */
         animation: bounce 1s infinite;
     }
 
@@ -71,33 +78,33 @@
 
 <button id="yes">Ja</button>
 <button id="no">Nein</button>
-<div id="arrow">⬆️</div> <!-- Pfeil, zeigt auf Ja -->
+
+<div id="arrowContainer"></div>
 
 <script>
     const noBtn = document.getElementById("no");
     const yesBtn = document.getElementById("yes");
-    const arrow = document.getElementById("arrow");
+    const arrowContainer = document.getElementById("arrowContainer");
 
-    let moveCount = 0;
+    let clickCount = 0;
 
     noBtn.addEventListener("mouseenter", () => {
-        moveCount++;
+        clickCount++;
 
-        // Button bewegt sich zufällig
+        // Button bewegt sich zufällig innerhalb des Bildschirms
         const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
         const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
         noBtn.style.left = x + "px";
         noBtn.style.top = y + "px";
 
-        // Nach ein paar Bewegungen wird der Pfeil angezeigt
-        if (moveCount >= 3) {
-            arrow.style.display = "block";
-
-            // Pfeil über Ja positionieren
-            const yesRect = yesBtn.getBoundingClientRect();
-            arrow.style.left = yesRect.left + yesRect.width/2 - 15 + "px";
-            arrow.style.top = yesRect.top - 50 + "px"; // über dem Button
-        }
+        // Nach jedem Klick erscheint ein Pfeil, der auf Ja zeigt
+        const yesRect = yesBtn.getBoundingClientRect();
+        const arrow = document.createElement("div");
+        arrow.className = "arrow";
+        arrow.style.left = (yesRect.left + yesRect.width/2 - 15) + "px";
+        arrow.style.top = (yesRect.top - 40 - (clickCount * 25)) + "px"; // jeder Pfeil ein Stück höher
+        arrow.textContent = "⬆️";
+        arrowContainer.appendChild(arrow);
     });
 
     yesBtn.addEventListener("click", () => {
