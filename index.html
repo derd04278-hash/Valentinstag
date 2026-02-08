@@ -56,7 +56,7 @@
         font-size: 2em;
         color: red;
         animation: bounce 1s infinite;
-        pointer-events: none; /* nicht klickbar */
+        pointer-events: none; /* Pfeile nicht klickbar */
     }
 
     @keyframes bounce {
@@ -80,23 +80,26 @@
     let arrowCount = 0;
 
     noBtn.addEventListener("mouseenter", () => {
-        // Nein-Button bewegt sich zufällig
+        // Nein-Button bewegt sich zufällig innerhalb des Bildschirms
         const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
         const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
         noBtn.style.left = x + "px";
         noBtn.style.top = y + "px";
 
-        // Pfeil erstellen
-        const yesRect = yesBtn.getBoundingClientRect();
+        // Pfeil erzeugen
         const arrow = document.createElement("div");
         arrow.className = "arrow";
-        arrow.textContent = "⬆️"; // Pfeil nach oben
+        arrow.textContent = "⬆️";
 
-        // Position über Ja-Button
-        arrow.style.left = (yesRect.left + yesRect.width/2 - 15) + "px";
-        arrow.style.top = (yesRect.top - 50 - arrowCount*25) + "px"; // stapelt nach oben
+        // Immer direkt über dem Ja-Button platzieren
+        const yesRect = yesBtn.getBoundingClientRect();
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
+
+        arrow.style.left = (yesRect.left + scrollLeft + yesRect.width/2 - 15) + "px";
+        arrow.style.top = (yesRect.top + scrollTop - 40 - arrowCount*30) + "px";
+
         document.body.appendChild(arrow);
-
         arrowCount++;
     });
 
