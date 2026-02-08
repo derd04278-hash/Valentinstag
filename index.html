@@ -49,6 +49,19 @@
         transition: all 0.3s;
         z-index: 2;
     }
+
+    #arrow {
+        position: absolute;
+        font-size: 3em;
+        color: red;
+        display: none; /* Pfeil ist zuerst unsichtbar */
+        animation: bounce 1s infinite;
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
 </style>
 </head>
 <body>
@@ -58,31 +71,36 @@
 
 <button id="yes">Ja</button>
 <button id="no">Nein</button>
+<div id="arrow">⬆️</div> <!-- Pfeil, zeigt auf Ja -->
 
 <script>
     const noBtn = document.getElementById("no");
     const yesBtn = document.getElementById("yes");
+    const arrow = document.getElementById("arrow");
 
-    let moveCount = 0; // Zählt, wie oft Nein bewegt wurde
+    let moveCount = 0;
 
     noBtn.addEventListener("mouseenter", () => {
         moveCount++;
 
-        if (moveCount >= 5) {
-            // Button komplett ausblenden, aus dem Bildschirm entfernen
-            noBtn.style.display = "none";
-            return;
-        }
-
-        // Neue zufällige Position innerhalb des Bildschirms
+        // Button bewegt sich zufällig
         const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
         const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
         noBtn.style.left = x + "px";
         noBtn.style.top = y + "px";
+
+        // Nach ein paar Bewegungen wird der Pfeil angezeigt
+        if (moveCount >= 3) {
+            arrow.style.display = "block";
+
+            // Pfeil über Ja positionieren
+            const yesRect = yesBtn.getBoundingClientRect();
+            arrow.style.left = yesRect.left + yesRect.width/2 - 15 + "px";
+            arrow.style.top = yesRect.top - 50 + "px"; // über dem Button
+        }
     });
 
     yesBtn.addEventListener("click", () => {
-        // Neue Seite mit Rosen
         document.body.innerHTML = `
             <h1 style="color:#ff4d6d;">I Love U Catarina ❤️</h1>
             <div style="display:flex;justify-content:center;flex-wrap:wrap;margin-top:30px;">
